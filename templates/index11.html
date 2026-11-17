@@ -1,1 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>ΔIAS AIRLINES</title>
+      <link rel="stylesheet" href="https://googleleapis.com"/>
 
+<style>
+      body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Tahoma, Geneva, Verdana;
+            background-image: url("{{url_for('static', filename='Boeing-777-915x610.jpg')}}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            color: #333;
+            }
+    header {
+           background-color: #0d233a;
+           color: white;
+           padding: 12px 15px;                                                                        
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           }
+    .logo  {
+           font-size: 18px;
+           font-weight: bold;
+           letter-spacing: 1px;
+           display: flex;
+           align-items: center;
+           gap: 10px;
+           }
+ .logo-img {
+           height: 60px;
+           width: auto;
+           margin-top: -10px;
+           margin-bottom: -10px;
+           mix-blend-mode: screen;
+           filter: invert(1) hue-rotate(180deg);
+           
+           }
+  .menu-btn {
+           display: flex;
+           flex-direction: column;
+           justify-content: space-around;
+           width: 24px;
+           height: 20px;
+           background: transparent;
+           border: none;
+           cursor: pointer;
+           padding: 0;
+           z-index: 1001;
+           }
+  .menu-btn div {
+           width: 24px;
+           height: 3px;
+           background-color: white;
+           border-radius: 5px;
+           transition: all 0.3s ease;
+           }
+.menu-btn.open div:nth-child(1) {
+           transform: rotate(45deg) translate(5px, 5px);
+           }
+.menu-btn.open div:nth-child(2) {
+           opacity: 0;
+           }
+.menu-btn.open div:nth-child(3) {
+           transform: rotate(-45deg) translate(5px, -6px);
+           }
+  .sidenav {
+           height: 100%;
+           width: 0;
+           position: fixed;
+           z-index: 1000;
+           top: 0;
+           left: 0;
+           background-color: #0d233a;
+           overflow-x: hidden;
+           transition: 0.4s;
+           padding-top: 60px;
+           box-shadow: 4px 0px 10px rgba(0,0,0,0.3);
+           }
+.sidenav a {
+           padding: 12px 24px;
+           text-decoration: none;
+           font-size: 18px;
+           color: white;
+           display: block;
+           border-bottom: 1px solid rgba(255,255,255,0.1);
+           }
+.sidenav a:hover {
+           background-color: #221652;
+           }
+.sidenav .close-btn {
+           position: absolute;
+           top: 10px;
+           right: 22px;
+           border-bottom: none;
+          }
+    main  {
+          padding: 10px 20px 50px 20px;
+          max-width: 800px;
+          margin: 0 auto;
+          }
+   .hero {
+          background-color: rgba(255, 255, 255, 0.45);
+          backdrop-filter: blur(5px);
+          padding: 15px 30px;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          text-align: center;
+          }
+   footer {
+          background-color: #333;
+          color: lightblue;
+          text-align: center;
+          padding: 15px 0;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          }
+          .logo
+</style>
+</head>
+<body>
+          <header>
+             <div class="logo">
+             <img src="{{ url_for('static', filename='logosign.png') }}" alt="ΔIAS AIRLINES Logo" class="logo-img">
+             <span>ΔIAS AIRLINES</span>
+         </div>
+             <button class="menu-btn" id="nav-icon" onclick="toggleNav()">
+             <div style="width: 24px; height: 3px; background-color: white; margin-bottom: 4px; border-radius: 5px;"></div>
+             <div style="width: 24px; height: 3px; background-color: white; margin-bottom: 4px; border-radius: 5px;"></div>
+             <div style="width: 24px; height: 3px; background-color: white; border-radius: 5px;"></div>
+         </button>
+         </header>
+
+<div id="mySidenav" class="sidenav" backdrop-filter: blur(5px);">
+         <li><a href="{{ url_for('organogram')}}">HOME</a></li>
+         <li><a href="fleet.html" target="_blank">OUR FLEET</a></li>
+         <a href="#">FLIGHTS</a>
+         <a href="#">SERVICES</a>
+         <a href="{{ url_for('book_flight')}}">BOOK A FLIGHT</a>
+         <a href="#">CHECKin</a>
+         <a href="#">IN FLIGHT ENTERTAINMENT</a>
+         <a href="#">IN FLIGHT MENU</a>
+         <a href="#">FLIGHT STATUS</a>
+         <a href="#">TRAVEL EXPERIENCE</a>
+         <a href="#">ATHENA CLUB</a>
+         <a href="#">AFRODITE CLUB</a>
+         <a href="#">HERA CLUB</a>
+         <a href="#">LOUNGE ACCESS</a>
+         <a href="#">ATHENS STOPOVER</a>
+         <a href="#">CONTACT</a>
+
+
+</div>
+
+<main>
+         <div class="hero">
+         <h1>WELCOME</h1>
+         <p>FROM THE HEART OF THE ANCIENT HELLAS</p>
+</div>
+</main>
+
+<footer>
+        &copy; 2026 ΔIAS AIRLINES S.A.
+</footer>
+
+<script>
+        function toggleNav() {
+          var sidebar=document.getElementById("mySidenav");
+          var icon=document.getElementById("nav-icon");
+          
+
+          if (!icon.classList.contains("open")) {
+             sidebar.style.width = "250px";
+             icon.classList.add("open");
+             } else {
+             sidebar.style.width = "0";
+             icon.classList.remove("open");
+             }
+             }
+</script>
+</body>
+</html>
+
+
+            
+                  
