@@ -1,1 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DIAS AIRLINES - Flight Results</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Times New Roman', Tahoma, Geneva, Verdana;
+                background-color: #0f2537;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+            .result-container {
+                background-color: rgba(255, 255, 255,0.1);
+                backdrop-filter: blur(10px);
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                width: 550px;
+                text-align: center;
+            }
+            h2 {
+                margin-bottom: 10px;
+                letter-spacing: 2px;
+            }
+            .flight-info {
+                color: #ccc;
+                margin-bottom: 30px;
+                font-size: 14px;
+            }
+            .flight-card {
+                background-color: rgba(255, 255, 255, 0.15);
+                margin-bottom: 15px;
+                padding: 15px;
+                border-radius: 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .flight-details {
+                text-align: left;
+            }
+            .flight-no {
+                font-size: 12px;
+                color: #aaa;
+            }
+            .price {
+                font-size: 20px;
+                font-weight: bold;
+                color: #4caf50;
+            }
+            .select-btn {
+                padding: 8px 15px;
+                background-color: #0d233a;
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            .select-btn:hover {
+                background-color: #1a3a5c;
 
+            }
+            .back-link {
+                display: inline-block;
+                margin-top: 25px;
+                color: #ccc;
+                text-decoration: none;
+                font-size: 14px;
+            }
+            .back-link:hover {
+                color: white;
+            }
+            </style>
+            </head>
+            <body>
+                <div class="results-container">
+                    <h2>AVAILABLE FLIGHTS</h2>
+                    <div class="flight-info">
+                        From <strong>{{ departure }}</strong> to <strong>{{ destination }} on <strong>{{ date }}</strong>
+                    </div>
+                    {% for flight in flights %}
+                    <div class="flight-card">
+                        <div class="flight-details">
+                            <span class="flight-no">{{ flight.flight_no }}</span>
+                            <div><strong>{{ flight.time }}</strong></div>
+                            <div style="font-size: 13px; color: #ddd;">Direct Flight</div>
+                        </div>
+                        <div class="price">{{ flight.price }}</div>
+                        <button class="select-btn">Select</button>
+                    </div>
+                    {% endfor %}
+                    <a href="{{ url_for('book_flight')}}" class="back-link">&larr; Change Search</a>
+                </div>
+                </body>
+                </html>
+                            
