@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>DIAS AIRLINES - Splash</title>
+        <style>
+            body, html {
+                margin: 0; 
+                padding: 0; 
+                width: 100%; 
+                height: 100%; 
+                overflow: hidden; 
+            }
+            .splash-container {
+                position: relative; 
+                width:100vw; 
+                height: 100vh;
+                background: radial-gradient(circle, #1a2a6c 0%, #0a1128 100%);
+                background-size: 100%;
+            }
+            .logo {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                width: 250px;
+                height: auto;
+                opacity: 0;
+                transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease;
+            }
+            .logo.reveal {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            
+            }
+            </style>
+            </head>
+            <body>
+                <div class="splash-container">
+                     <div class="logo" id="appLogo" style="color: white; font-size: 80px; font-weight: bpld; letter-spacing: 4px;">ΔIAS</div>
+                    
+                    </div>
 
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const logo = document.getElementById('appLogo');
+                        
+                            setTimeout(() => {
+                            if (logo) logo.classList.add('reveal');
+                        }, 1500);
+
+                        if(logo) {
+                            logo.addEventListener('transitionend', function(event)  {
+                            if (event.propertyName === 'transform') {
+                                setTimeout(() => {
+                                    window.location.href = "{{ url_for('home') }}";
+                            }, 4500);
+                        }
+                    });
+                }
+            });
+                        
+                    
+                
+                
+                    
+                    
+        </script>
+    </body>
+</html>
