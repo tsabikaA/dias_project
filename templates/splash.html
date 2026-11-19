@@ -1,65 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="google-site-verification" content="GpY9BLx03vSdcmYmgO3OYKzUd7-j5kW4RBc3POnERfE" />
         <meta charset="UTF-8">
-        <title>DIAS AIRLINES - Splash</title>
+        <title>ZEUS WORLD AIRLINES - Splash</title>
         <style>
-            body, html {
+            body {
                 margin: 0; 
                 padding: 0; 
                 width: 100%; 
-                height: 100%; 
+                height: 100%;
+                font-family:'Times New Roman', Times, serif;
+                background-color: #06142e; 
                 overflow: hidden; 
             }
-            .splash-container {
-                position: relative; 
-                width:100vw; 
+            #intro-screen {
+                position: fixed; 
+                top: 0; 
+                left: 0;
+                width: 100%;
                 height: 100vh;
-                background: radial-gradient(circle, #1a2a6c 0%, #0a1128 100%);
-                background-size: 100%;
-            }
-            .logo {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%) scale(0);
-                width: 250px;
-                height: auto;
+                background-color: #06142e;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                overflow: hidden;
+                transition: opacity 0.8s ease-out;
+             }
+            #intro-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
                 opacity: 0;
-                transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease;
+                animation: zeusZoom 3.5s ease-in-out 1.2s forwards;
             }
-            .logo.reveal {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            
+            #intro-logo {
+                color: #ffffff;
+                font-weight: 900;
+                letter-spacing: 1.5vw;
+                font-size: 35vw;
+                line-height: 0.95;
+                margin-left: 1.5vw;    
+            }
+            #intro-slogan {
+                color: #d4af37;
+                font-weight: 700;
+                font-size: 3.3vw;
+                letter-spacing: 0.45vw;
+                margin-top: 2vw;
+                margin-left: 0.45vw;
+                text-transform: uppercase;
+                text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+            }
+            @keyframes zeusZoom {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.15);
+                }
+                20% {
+                    opacity: 1;
+                }
+                85% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(1.15);
+                }
             }
             </style>
             </head>
             <body>
-                <div class="splash-container">
-                     <div class="logo" id="appLogo" style="color: white; font-size: 80px; font-weight: bpld; letter-spacing: 4px;">ΔIAS</div>
-                    
+                <div id="intro-screen">
+                    <div id="intro-content">
+                        <div id="intro-logo">ZEUS</div>
+                        <div id="intro-slogan">FROM THE HEART OF THE ANCIENT HELLAS</div>
                     </div>
+                    
+                </div>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const logo = document.getElementById('appLogo');
-                        
-                            setTimeout(() => {
-                            if (logo) logo.classList.add('reveal');
-                        }, 1500);
+                <script>
+                    window.addEventListener("load", function() {
+                        setTimeout( function() {
+                            const content = document.getElementById("intro-content");
+                            content.style.transition = "opacity 0.8s ease-out";
+                            content.style.opacity = "0";
 
-                        if(logo) {
-                            logo.addEventListener('transitionend', function(event)  {
-                            if (event.propertyName === 'transform') {
-                                setTimeout(() => {
-                                    window.location.href = "{{ url_for('home') }}";
-                            }, 4500);
-                        }
+                            setTimeout( function() {
+                                window.location.href = "/main";
+                            }, 800);
+                        }, 4400);
                     });
-                }
-            });
+                            
+                        
                         
                     
                 
@@ -69,3 +104,5 @@
         </script>
     </body>
 </html>
+
+                
