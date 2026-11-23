@@ -11,6 +11,10 @@ def home():
 def organogram():
     return render_template('orchart.html')
 
+@app.route('/fleet')
+def fleet():
+    return render_template('fleet.html')
+
 @app.route('/book')
 def book_flight():
     food_menu = [
