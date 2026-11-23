@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Our Fleet-Zeus World Airlines</title>
+    <style>
+        body {font-family:'Times New Roman', Times, serif; background: #f4f6f9;
+        margin: 0; color: #002244; }
+        .top-bar { background: #002244; color: white; padding: 15px 25px;
+        display: flrx; align-items: center; gap: 15px; }
+        .top-bar button { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+        .container { max-width: 750px; margin: 25px auto; padding: 0 20px; }
+        
+        .filter-box { margin-bottom: 20px; background: white; padding: 15px; border-radius: 6px; border: 1px solid #ddd; }
+        select { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; margin-top: 6px; }
+        .plane-card { background: white; border-radius: 6px; margin-bottom: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        border: 1px solid #ddd; cursor: pointer; transition: 0.15s; overflow: hidden; }
+
+        .plane-card:hover { transform: translateY(-2px); border-color: #002244; }
+        .card-header { background: #eef1f5; padding: 8px 20px; font-size: 12px; font-weight: bold; color: #444; display: flex; justify-content: space-between; }
+        .card-body { padding: 16px 20px; }
+        .plane-title { font-size: 20px; font-weight: bold; color: #002244; margin-bottom: 4px; }
+        .plane-code { color: #666; font-size: 14px; }
+
+        .detail-box { background: white; padding: 25px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        .plane-preview { text-align: center; padding: 25px; border: 1px solid #eee; margin: 20px 0; background: #fafbfc; }
+        .btn-layout { width: 100%; padding: 15px; background: white; color: #002244; border: 2px solid #002244; font-size: 16px; font-weight: bold; cursor: pointer; letter-spacing: 1px; margin-bottom: 25px; }
+
+        .btn-layout:hover { background: #002244; color: white; }
+        .spec-title { font-size: 14px; font-weight: bold; border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-bottom: 10px; }
+        .spec-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+        .spec-label { color: #666; }
+        .spec-val { font-weight: bold; text-align: right; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+        .modal-content { background: white; width: 95%; min-width: 600px; height: 90vh; margin: 3vh auto; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
+
+        .modal-header { background: #002244; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .close-btn { background: none; border: none; color: white; font-size: 28px; cursor: pointer; line-height: 1; }
+        .image-scroll { flex: 1; overflow-y: auto; padding: 20px; text-align: center; background: #f8f9fa; }
+        .image-scroll img { max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <button id="backBtn" onclick="goBack()">&#8592;</button>
+    <span id="barTitle">Our Fleet (15 Aircraft)</span>
+</div>
+
+<div class="container">
+    <div id="listView">
+        <h1>Zeus World Airlines Fleet</h1>
+        <p style="color:#555; font-style:italic;">Click on an aircraft to view specification and cabin layout.</p>
+
+        <div class="filter-box">
+            <label style="font-size: 12px; font-weight: bold; color: #555;">SELECT AIRCRAFT MODEL</label>
+            <select id="typeFilter" onchange="renderList()">
+                <option value="ALL">All Boeing Aircraft (15)</option>
+                <option value="777-300ER">Boeing 777-300ER (10)</option>
+                <option value="787-9">Boeing 787-9 Dreamliner (5)</option>
+
+            </select>
+            </div>
+            <div id="planesContainer"></div>
+            </div>
+    <div id="detailView" style="display: none;">
+        <div class="detail-box">
+            <h1 id="dModel" style="margin:0; font-size:24px;"></h1>
+            <div id="dReg" style="color:#777; font-weight:bold; margin-top:4px;"></div>
+        <div class="plane preview">
+            <div style="font-size: 50px;">&#9992;</div>
+            <div id="dSub" style="font-size: 13px; color: #555; margin-top: 5px;"></div>
+        </div>
+
+        <button class="btn-layout" onclick="openLayout()">VIEW LAYOUT</button>
+
+        <div class="spec-title">AIRCRAFT SPECIFICATIONS</div>
+        <div class="spec-row"><span class="spec-label">ACCOMMODATION</span><span class="spec-val" id="dPass"></span></div>
+        <div class="spec-row"><span class="spec-label">CRUISING SPEED</span><span class="spec-val" id="dSpeed"></span></div>
+        <div class="spec-row"><span class="spec-label">RANGE</span><span class="spec-val" id="dRange"></span></div>
+        <div class="spec-row"><span class="spec-label">ENGINE</span><span class="spec-val" id="dEngine"></span></div>
+        <div class="spec-row"><span class="spec-label">VIDEO</span><span class="spec-val" id="dVideo"></span></div>
+       </div>
+    </div>
+</div>
+<div id="layoutModal" class="modal" onclick="if(event.target === this) closeLayout()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="mTitle">Cabin Layout</span>
+            <button class="close-btn" onclick="closeLayout()">&times;</button>
+        </div>
+        <div class="image-scroll">
+            <img id="layoutImg" src="" alt="Aircraft Seat Map Layout">
+        </div>
+    </div>
+</div>
+
+<script>
+const fleet = [];
+const names777 = ["Marathon", "Delos", "Apollo", "Talos", "Hermes", "Delphi", "Olympia", "Knossos", "Sparta", "Victory of Samothrace"];
+const regs777 = ["SX-ZAB", "SX-ZKB", "SX-ZEB", "SX-ZIB", "SX-ZTB", "SX-ZBB", "SX-ZKT", "SX-ZBN", "SX-ZME", "SX-ZZH"];
+const names787 = ["Athena", "Hera", "Artemis", "Tsabika", "Aphrodite"]; 
+const regs787 = ["SX-ZDA", "SX-ZDB", "SX-ZDC", "SX-ZDD", "SX-ZDE"];
+
+names777.forEach((name, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    const reg = regs777[i];
+    const photoIndex = i + 1;
+    fleet.push({
+        id: `77W-${num}`, reg: reg, type: "777-300ER",
+        model: `Boeing 777-300ER - ${name} (${reg})`,
+        passengers: "365 PASSENGERS", speed: "560 MPH (901 KM/H)",
+        range: "7,370 NM (13,650 KM)", engine: "2 GE90-115B TURBOFANS", video: "YES (4K TOUCHSCREEN)",
+        layoutImage: `/static/layout-${photoIndex}.png`
+    });
+}); 
+
+names787.forEach((name, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    const reg = regs787[i];
+    const photoIndex = i + 1;
+    fleet.push({
+        id: `789-${num}`, reg: reg, type: "787-9",
+        model: `Boeing 787-9 Dreamliner - ${name} (${reg})`,
+        passengers: "290 PASSENGERS", speed: "561 MPH (903 KM/H)",
+        range: "7,565 NM (14,010 KM)", engine: "2 GEnx-1B TURBOFANS", video: "YES (4K TOUCHSCREEN)",
+        layoutImage: `/static/layout-${photoIndex}.png`
+    });
+});
+
+let currentPlane = null;
+
+function renderList() {
+    const filter = document.getElementById('typeFilter').value;
+    const container = document.getElementById('planesContainer');
+    container.innerHTML = '';
+
+    fleet.filter(p => filter === 'ALL' || p.type === filter).forEach(p => {
+        container.innerHTML += `
+        <div class="plane-card" onclick="showDetail('${p.id}')">
+            <div class="card-header"><span>BOEING ${p.type}</span><span>REG: ${p.reg}</span></div>
+            <div class="card-body">
+                <div class="plane-title">${p.model}</div>
+                <div class="plane-code">Capacity: ${p.passengers} &bull; Range: ${p.range}</div>
+                </div>
+            </div>
+        `;
+
+    });
+}
+
+function showDetail(id) {
+    currentPlane = fleet.find(p => p.id === id);
+    document.getElementById('dModel').innerText = currentPlane.model;
+    document.getElementById('dReg').innerText = `Registration: ${currentPlane.reg} $bull; Code: ${currentPlane.id}`;
+    document.getElementById('dSub').innerText = `ZEUS WORLD AIRLINES - BOEING ${currentPlane.type}`;
+    document.getElementById('dPass').innerText = currentPlane.passengers;
+    document.getElementById('dSpeed').innerText = currentPlane.speed;
+    document.getElementById('dRange').innerText = currentPlane.range;
+    document.getElementById('dEngine').innerText = currentPlane.engine;
+    document.getElementById('dVideo').innerText = currentPlane.video;
+
+    document.getElementById('listView').style.display = 'none';
+    document.getElementById('detailView').style.display = 'block';
+    document.getElementById('barTitle').innerText = 'Aircraft Detail';
+    window.scrollTo(0, 0);
+
+}
+
+function goBack() {
+    if (document.getElementById('detailView').style.display === 'block') {
+        document.getElementById('detailView').style.display = 'none';
+        document.getElementById('listView').style.display = 'block';
+        document.getElementById('barTitle').innerText = 'Our Fleet (15 Aircraft)';
+    } else {
+        window.location.href = '/main';
+    }
+}
+
+function openLayout() {
+    document.getElementById('mTitle').innerText = `${currentPlane.model} - Cabin Layout`;
+    document.getElementById('layoutImg').src = currentPlane.layoutImage;
+    document.getElementById('layoutModal').style.display = 'block';
+}
+
+function closeLayout() {
+    document.getElementById('layoutModal').style.display = 'none';
+}
+
+renderList();
+</script>
+
+</body>
+</html>
+            
