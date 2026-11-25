@@ -7,7 +7,7 @@
         body {font-family:'Times New Roman', Times, serif; background: #f4f6f9;
         margin: 0; color: #002244; }
         .top-bar { background: #002244; color: white; padding: 15px 25px;
-        display: flex; align-items: center; gap: 15px; }
+        display: flrx; align-items: center; gap: 15px; }
         .top-bar button { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
         .container { max-width: 750px; margin: 25px auto; padding: 0 20px; }
         
@@ -69,8 +69,8 @@
             <h1 id="dModel" style="margin:0; font-size:24px;"></h1>
             <div id="dReg" style="color:#777; font-weight:bold; margin-top:4px;"></div>
         <div class="plane preview">
-            <div style="font-size: 50px;">&#9992;</div>
-            <div id="dSub" style="font-size: 13px; color: #555; margin-top: 5px;"></div>
+            <img id="dPlaneImg" src="" alt="Aircraft Livery" style="max-width: 100%; max-height: 180px; object-fit: contain;">
+            <div id="dSub" style="font-size: 13px; color: #555; margin-top: 10px;"></div>
         </div>
 
         <button class="btn-layout" onclick="openLayout()">VIEW LAYOUT</button>
@@ -100,6 +100,8 @@
 const fleet = [];
 const names777 = ["Marathon", "Delos", "Apollo", "Talos", "Hermes", "Delphi", "Olympia", "Knossos", "Sparta", "Victory of Samothrace"];
 const regs777 = ["SX-ZAB", "SX-ZKB", "SX-ZEB", "SX-ZIB", "SX-ZTB", "SX-ZBB", "SX-ZKT", "SX-ZBN", "SX-ZME", "SX-ZZH"];
+const photos777 = ["20261125_165450.png"];
+const liveries777 = ["livery-1.png"];
 const names787 = ["Athena", "Hera", "Artemis", "Tsabika", "Aphrodite"]; 
 const regs787 = ["SX-ZDA", "SX-ZDB", "SX-ZDC", "SX-ZDD", "SX-ZDE"];
 
@@ -112,7 +114,8 @@ names777.forEach((name, i) => {
         model: `Boeing 777-300ER - ${name} (${reg})`,
         passengers: "365 PASSENGERS", speed: "560 MPH (901 KM/H)",
         range: "7,370 NM (13,650 KM)", engine: "2 GE90-115B TURBOFANS", video: "YES (4K TOUCHSCREEN)",
-        layoutImage: `/static/layout-${photoIndex}.png`
+        planeImage: `/static/${liveries777[i]}`,
+        layoutImage: `/static/${photos777[i]}`
     });
 }); 
 
@@ -155,6 +158,7 @@ function showDetail(id) {
     document.getElementById('dModel').innerText = currentPlane.model;
     document.getElementById('dReg').innerText = `Registration: ${currentPlane.reg} $bull; Code: ${currentPlane.id}`;
     document.getElementById('dSub').innerText = `ZEUS WORLD AIRLINES - BOEING ${currentPlane.type}`;
+    document.getElementById('dPlaneImg').src = currentPlane.planeImage;
     document.getElementById('dPass').innerText = currentPlane.passengers;
     document.getElementById('dSpeed').innerText = currentPlane.speed;
     document.getElementById('dRange').innerText = currentPlane.range;
@@ -194,3 +198,6 @@ renderList();
 </body>
 </html>
             
+
+   
+ 
